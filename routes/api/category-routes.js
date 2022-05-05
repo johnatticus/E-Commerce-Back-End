@@ -6,7 +6,6 @@ const { Category, Product } = require('../../models');
 router.get('/', (req, res) => {
   // find all categories
   // be sure to include its associated Products
-
   Category.findAll({
     include: [Product]
   })
@@ -46,18 +45,37 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   // update a category by its `id` value
+  Category.update(
+    {
+      // All the fields you can update and the data attached to the request body.
+      category_name: req.body.title,
+    },
+    {
+      // Gets a book based on the book_id given in the request parameters
+      where: {
+        category_id: req.params.category_id,
+      },
+    }
+  )
+    .then((updatedCategory) => {
+      res.json(updatedCategory);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json(err);
+    });
 });
 
 router.delete('/:id', (req, res) => {
   // delete a category by its `id` value
   try {
-    const CategoryrData = await Category.destroy({
+    const categoryData = await Category.destroy({
       where: {
         id: req.params.id
       }
     });
 
-    if (!CategoryData) {
+    if (!categoryData) {
       res.status(404).json({ message: 'No category found with this id!' });
       return;
     }
