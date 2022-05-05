@@ -34,6 +34,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+console.log('creating new category', req.body)
   // create a new category
   try {
     const categoryData = await Category.create(req.body);
@@ -48,12 +49,12 @@ router.put('/:id', (req, res) => {
   Category.update(
     {
       // All the fields you can update and the data attached to the request body.
-      category_name: req.body.title,
+      category_name: req.body.category_name,
     },
     {
-      // Gets a book based on the book_id given in the request parameters
+      // Gets a category based on the book_id given in the request parameters
       where: {
-        category_id: req.params.category_id,
+        id: req.params.id,
       },
     }
   )
