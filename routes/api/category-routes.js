@@ -5,12 +5,13 @@ const { Category, Product } = require('../../models');
 
 router.get('/', (req, res) => {
   // find all categories
+  // be sure to include its associated Products
+
   Category.findAll({
     include: [Product]
   })
   .then((categories) => res.json(categories))
   .catch((err) => res.status(500).json(err))
-  // be sure to include its associated Products
 });
 
 router.get('/:id', (req, res) => {
@@ -18,7 +19,7 @@ router.get('/:id', (req, res) => {
   // be sure to include its associated Products
   try {
     const categoryData = await Category.findByPk(req.params.id, {
-      // JOIN with locations, using the Trip through table
+      // JOIN with Product
       include: [{ model: Product }]
     });
 
@@ -35,6 +36,12 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   // create a new category
+  try {
+    const categoryData = await Category.create(req.body);
+    res.status(200).json(categoryData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
 router.put('/:id', (req, res) => {
@@ -43,6 +50,22 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete a category by its `id` value
+  try {
+    const CategoryrData = await Category.destroy({
+      where: {
+        id: req.params.id
+      }
+    });
+
+    if (!CategoryData) {
+      res.status(404).json({ message: 'No category found with this id!' });
+      return;
+    }
+
+    res.status(200).json(categoryData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;
