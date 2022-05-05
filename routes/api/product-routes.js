@@ -54,6 +54,9 @@ router.post('/', async (req, res) => {
         const productTagIdArr = req.body.tagIds.map((tag_id) => {
           return {
             product_id: product.id,
+            // product_name: product.product_name,
+            // price: product.price,
+            // stock: product.stock,
             tag_id,
           };
         });

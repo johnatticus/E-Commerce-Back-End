@@ -48,7 +48,7 @@ router.put('/:id', (req, res) => {
   Tag.update(
     {
       // All the fields you can update and the data attached to the request body.
-      tag_name: req.body.title,
+      tag_name: req.body.tag_name,
     },
     {
       // Gets a book based on the book_id given in the request parameters
