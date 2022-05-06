@@ -37,15 +37,12 @@
 
 **Test Commands:** `npm start` or `node server.js`
 
-**Other Info:**
-- Must create database `ecommerce_db` before running.
-- Populate seeds with `node seeds/index.js`
-
 ---
 
-## Contributions
+## Other Info
 
-N/A
+- Must create database `ecommerce_db` before running.
+- Populate seeds with `node seeds/index.js`
 
 ---
 
